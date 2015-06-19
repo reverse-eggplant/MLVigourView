@@ -67,6 +67,7 @@ static const CGFloat kDefaultViscosity = 15.0;
     
     UIPanGestureRecognizer * pan;
     UITapGestureRecognizer * tap;
+    BOOL isTapping;   //tap动画是否正在执行，若正在执行，那么不响应新的手势事件
 }
 
 /**
@@ -388,7 +389,7 @@ static const CGFloat kDefaultViscosity = 15.0;
 
 -(void)dragBubbleAction:(UIPanGestureRecognizer *)panGesture
 {
-    if (!self.openPanGesture) {
+    if (!self.openPanGesture || isTapping) {
         return;
     }
     
@@ -439,6 +440,9 @@ static const CGFloat kDefaultViscosity = 15.0;
 
 - (void)bubbleTapAction:(UITapGestureRecognizer *)tapGes
 {
+    if (isTapping) {
+        return;
+    }
     
     if (tapGes.state == UIGestureRecognizerStateRecognized)
     {
@@ -452,6 +456,7 @@ static const CGFloat kDefaultViscosity = 15.0;
             }
         }
         
+        isTapping = YES;
         CGRect currentFrame = self.frontView.frame;
         __weak typeof(self)weakSelf = self;
         [UIView animateWithDuration:0.5 delay:0.0 usingSpringWithDamping:0.5 initialSpringVelocity:0.0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
@@ -469,6 +474,8 @@ static const CGFloat kDefaultViscosity = 15.0;
                 anotherWeakSelf.frontView.frame = currentFrame;
                 anotherWeakSelf.frontView.layer.cornerRadius = currentFrame.size.width/2.0;
                 anotherWeakSelf.bubbleLabel.center = CGPointMake(CGRectGetMidX(anotherWeakSelf.frontView.bounds), CGRectGetMidY(anotherWeakSelf.frontView.bounds));
+            }completion:^(BOOL finished) {
+                isTapping = NO;
             }];
         }];
         
