@@ -82,15 +82,16 @@ static const CGFloat kDefaultViscosity = 20.0;
  */
 - (instancetype)initWithCenter:(CGPoint)centerPoint
                   bubbleRadius:(CGFloat)bubbleRadius
-               bubbleViscosity:(CGFloat)bubbleViscosity bubbleColor:(UIColor *)bubbleColor
+               bubbleViscosity:(CGFloat)bubbleViscosity
+                   bubbleColor:(UIColor *)bubbleColor
                  containerView:(UIView *)containerView
 {
     self = [super initWithFrame:CGRectMake(centerPoint.x, centerPoint.y, 0.0, 0.0)];
     if (self) {
         
         initialPoint = centerPoint;
-        _viscosity = kDefaultViscosity;     //设置默认粘度
-        _bubbleWidth = kDefaultRadius;      //设置默认宽度
+        _viscosity = bubbleViscosity;     //设置默认粘度
+        _bubbleWidth = bubbleRadius;      //设置默认宽度
         self.bubbleColor = bubbleColor;
         self.containerView = containerView;
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(CGFLOAT_MIN * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
@@ -452,19 +453,23 @@ static const CGFloat kDefaultViscosity = 20.0;
         }
         
         CGRect currentFrame = self.frontView.frame;
-        
-        [UIView animateWithDuration:0.3 delay:0.0 usingSpringWithDamping:0.5 initialSpringVelocity:0.0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+        __weak typeof(self)weakSelf = self;
+        [UIView animateWithDuration:0.5 delay:0.0 usingSpringWithDamping:0.5 initialSpringVelocity:0.0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
             CGRect rect = CGRectInset(oldBackViewFrame, -fabs(tapPoint.x-oldBackViewCenter.x), -fabs(tapPoint.y-oldBackViewCenter.y));
             
-            self.frontView.frame = rect;
-            self.frontView.layer.cornerRadius = rect.size.width/2.0;
-            self.bubbleLabel.center = CGPointMake(CGRectGetMidX(self.frontView.bounds), CGRectGetMidY(self.frontView.bounds));
+            weakSelf.frontView.frame = rect;
+            weakSelf.frontView.layer.cornerRadius = rect.size.width/2.0;
+            weakSelf.bubbleLabel.center = CGPointMake(CGRectGetMidX(weakSelf.frontView.bounds), CGRectGetMidY(weakSelf.frontView.bounds));
 
         } completion:^(BOOL finished) {
             
-            self.frontView.frame = currentFrame;
-            self.frontView.layer.cornerRadius = currentFrame.size.width/2.0;
-            self.bubbleLabel.center = CGPointMake(CGRectGetMidX(self.frontView.bounds), CGRectGetMidY(self.frontView.bounds));
+            __strong typeof(weakSelf)strongSelf = weakSelf;
+            [UIView animateWithDuration:0.3 animations:^{
+                __weak typeof(strongSelf)anotherWeakSelf = self;
+                anotherWeakSelf.frontView.frame = currentFrame;
+                anotherWeakSelf.frontView.layer.cornerRadius = currentFrame.size.width/2.0;
+                anotherWeakSelf.bubbleLabel.center = CGPointMake(CGRectGetMidX(anotherWeakSelf.frontView.bounds), CGRectGetMidY(anotherWeakSelf.frontView.bounds));
+            }];
         }];
         
         if (self.tapDisappear) {

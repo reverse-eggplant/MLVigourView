@@ -89,17 +89,6 @@
  *  初始化粘性视图对象
  *
  *  @param centerPoint     视图初始中心点坐标
- *  @param containerView   气泡父视图
- *
- *  @return 气泡实例
- */
-- (instancetype)initWithCenter:(CGPoint)centerPoint
-                 containerView:(UIView *)containerView;
-
-/**
- *  初始化粘性视图对象
- *
- *  @param centerPoint     视图初始中心点坐标
  *  @param bubbleRadius    气泡半径
  *  @param containerView   气泡父视图
  *
@@ -108,6 +97,18 @@
 - (instancetype)initWithCenter:(CGPoint)centerPoint
                   bubbleRadius:(CGFloat)bubbleRadius
                  containerView:(UIView *)containerView;
+
+/**
+ *  初始化粘性视图对象
+ *
+ *  @param centerPoint     视图初始中心点坐标
+ *  @param containerView   气泡父视图
+ *
+ *  @return 气泡实例
+ */
+- (instancetype)initWithCenter:(CGPoint)centerPoint
+                 containerView:(UIView *)containerView;
+
 
 /**
  *  初始化粘性视图对象

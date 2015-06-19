@@ -17,7 +17,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    MLVigourView * mlvv = [[MLVigourView alloc]initWithCenter:CGPointMake(100, 100) containerView:self.view];
+    MLVigourView * mlvv = [[MLVigourView alloc]initWithCenter:CGPointMake(100, 100) bubbleRadius:50 containerView:self.view];
     mlvv.vigourViewDelegate = self;
     mlvv.text = @"12";
     // Do any additional setup after loading the view, typically from a nib.
