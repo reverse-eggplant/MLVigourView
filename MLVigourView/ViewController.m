@@ -7,6 +7,7 @@
 //
 
 #import "ViewController.h"
+#import "MLVigourView.h"
 
 @interface ViewController ()
 
@@ -16,6 +17,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    MLVigourView * mlvv = [[MLVigourView alloc]initWithCenter:CGPointMake(100, 100) containerView:self.view];
+    mlvv.text = @"12";
     // Do any additional setup after loading the view, typically from a nib.
 }
 
