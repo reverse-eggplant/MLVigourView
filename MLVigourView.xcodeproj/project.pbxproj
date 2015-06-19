@@ -15,6 +15,7 @@
 		E28E231C1B33E6D900C39521 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = E28E231A1B33E6D900C39521 /* LaunchScreen.xib */; };
 		E28E23281B33E6D900C39521 /* MLVigourViewTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E28E23271B33E6D900C39521 /* MLVigourViewTests.m */; };
 		E28E23481B33E77800C39521 /* MLVigourView.m in Sources */ = {isa = PBXBuildFile; fileRef = E28E23471B33E77800C39521 /* MLVigourView.m */; };
+		E28E234B1B3401C700C39521 /* MLCommonFunctions.m in Sources */ = {isa = PBXBuildFile; fileRef = E28E234A1B3401C700C39521 /* MLCommonFunctions.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -43,6 +44,8 @@
 		E28E23271B33E6D900C39521 /* MLVigourViewTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MLVigourViewTests.m; sourceTree = "<group>"; };
 		E28E23461B33E77800C39521 /* MLVigourView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MLVigourView.h; sourceTree = "<group>"; };
 		E28E23471B33E77800C39521 /* MLVigourView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MLVigourView.m; sourceTree = "<group>"; };
+		E28E23491B3401C700C39521 /* MLCommonFunctions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MLCommonFunctions.h; sourceTree = "<group>"; };
+		E28E234A1B3401C700C39521 /* MLCommonFunctions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MLCommonFunctions.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -128,6 +131,8 @@
 			children = (
 				E28E23461B33E77800C39521 /* MLVigourView.h */,
 				E28E23471B33E77800C39521 /* MLVigourView.m */,
+				E28E23491B3401C700C39521 /* MLCommonFunctions.h */,
+				E28E234A1B3401C700C39521 /* MLCommonFunctions.m */,
 			);
 			path = MLVigourView;
 			sourceTree = "<group>";
@@ -236,6 +241,7 @@
 				E28E23481B33E77800C39521 /* MLVigourView.m in Sources */,
 				E28E23111B33E6D900C39521 /* AppDelegate.m in Sources */,
 				E28E230E1B33E6D900C39521 /* main.m in Sources */,
+				E28E234B1B3401C700C39521 /* MLCommonFunctions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
