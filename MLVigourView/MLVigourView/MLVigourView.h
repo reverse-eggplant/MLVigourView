@@ -29,7 +29,7 @@
 @property (nonatomic,assign)CGFloat bubbleWidth;
 
 /**
- *  气泡粘性系数，越大可以拉得越长。默认为20.0
+ *  气泡粘性系数，越大可以拉得越长。默认为15.0
  */
 @property (nonatomic,assign)CGFloat viscosity;
 
