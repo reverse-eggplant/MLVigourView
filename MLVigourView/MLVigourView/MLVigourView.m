@@ -61,11 +61,12 @@ static const CGFloat kDefaultViscosity = 20.0;
     CGRect oldBackViewFrame;
     CGPoint oldBackViewCenter;
     
-    CAShapeLayer *shapeLayer;
-    UIBezierPath *cutePath;
-    UIColor *fillColorForCute;
-    UIPanGestureRecognizer *pan;
-
+    CAShapeLayer * shapeLayer;
+    UIBezierPath * cutePath;
+    UIColor * fillColorForCute;
+    
+    UIPanGestureRecognizer * pan;
+    UITapGestureRecognizer * tap;
 }
 
 /**
@@ -286,6 +287,32 @@ static const CGFloat kDefaultViscosity = 20.0;
     }
 }
 
+- (void)setOpenTapGesture:(BOOL)openTapGesture
+{
+    if (_openTapGesture == openTapGesture) {
+        return;
+    }
+    _openTapGesture = openTapGesture;
+    if (_openTapGesture) {
+        if (!tap) {
+            tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(bubbleTapAction:)];
+        }
+        [self.frontView addGestureRecognizer:tap];
+    }else{
+        if (tap) [self.frontView removeGestureRecognizer:tap];
+    }
+}
+
+- (void)setTapDisappear:(BOOL)tapDisappear
+{
+    if (_tapDisappear == tapDisappear) {
+        return;
+    }
+    _tapDisappear = tapDisappear;
+
+}
+
+
 #pragma mark  基础设置
 
 -(void)setUp
@@ -296,7 +323,7 @@ static const CGFloat kDefaultViscosity = 20.0;
     [self.containerView addSubview:self.backView];
     [self.containerView addSubview:self.frontView];
     self.openPanGesture = YES;
-    
+    self.openTapGesture = YES;
     x1 = _backView.center.x;
     y1 = _backView.center.y;
     x2 = self.frontView.center.x;
@@ -356,11 +383,23 @@ static const CGFloat kDefaultViscosity = 20.0;
     [self.frontView.layer addAnimation:scaleY forKey:@"scaleYAnimation"];
 }
 
-#pragma mark 拖拽手势action
+#pragma mark 手势action
 
 -(void)dragBubbleAction:(UIPanGestureRecognizer *)panGesture
 {
+    if (!self.openPanGesture) {
+        return;
+    }
+    
     CGPoint dragPoint = [panGesture locationInView:self.containerView];
+    
+    if (_vigourViewDelegate != nil) {
+        if ([_vigourViewDelegate conformsToProtocol:@protocol(MLVigourViewDelegate)]) {
+            if ([_vigourViewDelegate respondsToSelector:@selector(mlVigourView:paninOnPoint:)]) {
+                [_vigourViewDelegate mlVigourView:self paninOnPoint:dragPoint];
+            }
+        }
+    }
     
     if (panGesture.state == UIGestureRecognizerStateBegan) {
         _backView.hidden = NO;
@@ -395,6 +434,26 @@ static const CGFloat kDefaultViscosity = 20.0;
     
     [self reCalculateBubbleArg];
     
+}
+
+- (void)bubbleTapAction:(UITapGestureRecognizer *)tapGes
+{
+    
+    if (tapGes.state == UIGestureRecognizerStateRecognized) {
+        CGPoint tapPoint = [tapGes locationInView:self.containerView];
+        
+        if (_vigourViewDelegate != nil) {
+            if ([_vigourViewDelegate conformsToProtocol:@protocol(MLVigourViewDelegate)]) {
+                if ([_vigourViewDelegate respondsToSelector:@selector(mlVigourView:tappedOnPoint:)]) {
+                    [_vigourViewDelegate mlVigourView:self tappedOnPoint:tapPoint];
+                }
+            }
+        }
+        if (self.tapDisappear) {
+            [self removeFromSuperview];
+        }
+        
+    }
 }
 
 

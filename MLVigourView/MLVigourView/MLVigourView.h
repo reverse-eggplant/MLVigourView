@@ -13,6 +13,8 @@
  */
 
 #import <UIKit/UIKit.h>
+@protocol MLVigourViewDelegate;
+
 
 @interface MLVigourView : UIView
 /**
@@ -49,6 +51,21 @@
  *  打开或关闭拖拽手势。默认打开
  */
 @property (nonatomic)BOOL openPanGesture;
+
+/**
+ *  打开或关闭tap手势。默认打开
+ */
+@property (nonatomic)BOOL openTapGesture;
+
+/**
+ *  轻拍消失
+ */
+@property (nonatomic)BOOL tapDisappear;
+
+/**
+ *  视图操作代理
+ */
+@property (nonatomic,weak)id <MLVigourViewDelegate> vigourViewDelegate;
 
 
 /**
@@ -118,3 +135,28 @@
                bubbleViscosity:(CGFloat)bubbleViscosity
                  containerView:(UIView *)containerView;
 @end
+
+
+@protocol MLVigourViewDelegate <NSObject>
+
+@optional
+
+/**
+ *  粘性视图被轻拍时的代理方法
+ *
+ *  @param vigourView  被轻拍的视图
+ *  @param tappedPoint 被拍到的点
+ */
+- (void)mlVigourView:(MLVigourView *)vigourView tappedOnPoint:(CGPoint)tappedPoint;
+
+/**
+ *  粘性视图被轻拖拽时的代理方法
+ *
+ *  @param vigourView  被拖拽的视图
+ *  @param tappedPoint 拖拽正在经过的点
+ */
+- (void)mlVigourView:(MLVigourView *)vigourView paninOnPoint:(CGPoint)paningPoint;
+
+@end
+
+
