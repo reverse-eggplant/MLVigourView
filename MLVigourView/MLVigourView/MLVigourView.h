@@ -157,7 +157,7 @@
  *  @param vigourView  被拖拽的视图
  *  @param tappedPoint 拖拽正在经过的点
  */
-- (void)mlVigourView:(MLVigourView *)vigourView paninOnPoint:(CGPoint)paningPoint;
+- (void)mlVigourView:(MLVigourView *)vigourView paningOnPoint:(CGPoint)paningPoint;
 
 @end
 

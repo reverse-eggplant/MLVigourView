@@ -14,7 +14,7 @@
 #define kDefaultBubbleColor [UIColor colorWithRed:0 green:0.722 blue:1 alpha:1]
 
 static const CGFloat kDefaultRadius = 30.0;
-static const CGFloat kDefaultViscosity = 20.0;
+static const CGFloat kDefaultViscosity = 15.0;
 
 @interface MLVigourView ()
 
@@ -396,8 +396,8 @@ static const CGFloat kDefaultViscosity = 20.0;
     
     if (_vigourViewDelegate != nil) {
         if ([_vigourViewDelegate conformsToProtocol:@protocol(MLVigourViewDelegate)]) {
-            if ([_vigourViewDelegate respondsToSelector:@selector(mlVigourView:paninOnPoint:)]) {
-                [_vigourViewDelegate mlVigourView:self paninOnPoint:dragPoint];
+            if ([_vigourViewDelegate respondsToSelector:@selector(mlVigourView:paningOnPoint:)]) {
+                [_vigourViewDelegate mlVigourView:self paningOnPoint:dragPoint];
             }
         }
     }
