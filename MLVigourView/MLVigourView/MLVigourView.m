@@ -439,7 +439,8 @@ static const CGFloat kDefaultViscosity = 20.0;
 - (void)bubbleTapAction:(UITapGestureRecognizer *)tapGes
 {
     
-    if (tapGes.state == UIGestureRecognizerStateRecognized) {
+    if (tapGes.state == UIGestureRecognizerStateRecognized)
+    {
         CGPoint tapPoint = [tapGes locationInView:self.containerView];
         
         if (_vigourViewDelegate != nil) {
@@ -449,10 +450,27 @@ static const CGFloat kDefaultViscosity = 20.0;
                 }
             }
         }
+        
+        CGRect currentFrame = self.frontView.frame;
+        
+        [UIView animateWithDuration:0.3 delay:0.0 usingSpringWithDamping:0.5 initialSpringVelocity:0.0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+            CGRect rect = CGRectInset(oldBackViewFrame, -fabs(tapPoint.x-oldBackViewCenter.x), -fabs(tapPoint.y-oldBackViewCenter.y));
+            
+            self.frontView.frame = rect;
+            self.frontView.layer.cornerRadius = rect.size.width/2.0;
+            self.bubbleLabel.center = CGPointMake(CGRectGetMidX(self.frontView.bounds), CGRectGetMidY(self.frontView.bounds));
+
+        } completion:^(BOOL finished) {
+            
+            self.frontView.frame = currentFrame;
+            self.frontView.layer.cornerRadius = currentFrame.size.width/2.0;
+            self.bubbleLabel.center = CGPointMake(CGRectGetMidX(self.frontView.bounds), CGRectGetMidY(self.frontView.bounds));
+        }];
+        
         if (self.tapDisappear) {
             [self removeFromSuperview];
         }
-        
+
     }
 }
 
